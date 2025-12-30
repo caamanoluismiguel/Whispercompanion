@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1a1a1a">
+  <title>Isthmus · Teaching Companion</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #1a1a1a;
+      --dark: #242424;
+      --dark-elevated: #2e2e2e;
+      --dark-border: #3a3a3a;
+      --gold: #c9a227;
+      --gold-light: #d4b342;
+      --gold-muted: rgba(201, 162, 39, 0.15);
+      --white: #ffffff;
+      --white-90: rgba(255,255,255,0.9);
+      --white-70: rgba(255,255,255,0.7);
+      --white-50: rgba(255,255,255,0.5);
+      --white-30: rgba(255,255,255,0.3);
+      --white-10: rgba(255,255,255,0.1);
+      --white-05: rgba(255,255,255,0.05);
+      --success: #4ade80;
+      --success-bg: rgba(74, 222, 128, 0.15);
+      --warning: #fbbf24;
+      --warning-bg: rgba(251, 191, 36, 0.15);
+      --error: #f87171;
+      --error-bg: rgba(248, 113, 113, 0.15);
+      --info: #60a5fa;
+      --info-bg: rgba(96, 165, 250, 0.15);
+      
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+      --shadow-gold: 0 4px 24px rgba(201, 162, 39, 0.3);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    html { height: -webkit-fill-available; }
+    
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--black);
+      color: var(--white-90);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .header {
+      background: var(--dark);
+      border-bottom: 1px solid var(--dark-border);
+      padding: var(--space-md) var(--space-lg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+    }
+    
+    .logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--white);
+    }
+    
+    .logo-accent { color: var(--gold); }
+    
+    .subtitle {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--white-50);
+    }
+    
+    .header-btn {
+      background: var(--white-05);
+      border: 1px solid var(--white-10);
+      color: var(--white-70);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .header-btn:hover {
+      background: var(--white-10);
+      color: var(--white);
+    }
+    
+    .header-btn.configured {
+      color: var(--success);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+    
+    .main {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: var(--space-lg) var(--space-md) 100px;
+    }
+    
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: var(--space-md);
+    }
+    
+    .page-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: var(--space-xs);
+      line-height: 1.2;
+    }
+    
+    .page-meta {
+      font-size: 14px;
+      color: var(--white-50);
+    }
+    
+    /* Day badge */
+    .day-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-muted);
+      color: var(--gold);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: var(--space-sm);
+    }
+    
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    
+    .card:active { transform: scale(0.98); }
+    .card:hover::before, .card:active::before { opacity: 1; }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .card-meta {
+      font-size: 13px;
+      color: var(--white-50);
+    }
+    
+    .card-arrow {
+      color: var(--white-30);
+      font-size: 20px;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    
+    .card:hover .card-arrow {
+      color: var(--gold);
+      transform: translateX(4px);
+    }
+    
+    .form-card {
+      background: var(--dark);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-top: var(--space-md);
+    }
+    
+    .input {
+      width: 100%;
+      background: var(--dark-elevated);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md);
+      color: var(--white);
+      font-size: 16px;
+      font-family: inherit;
+      margin-bottom: var(--space-md);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      -webkit-appearance: none;
+    }
+    
+    .input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-muted);
+    }
+    
+    .input::placeholder { color: var(--white-30); }
+    
+    textarea.input {
+      min-height: 100px;
+      resize: none;
+      line-height: 1.6;
+    }
+    
+    .btn {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+    
+    .btn:hover {
+      background: var(--gold-light);
+      box-shadow: var(--shadow-gold);
+    }
+    
+    .btn:active { transform: scale(0.96); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--gold-muted);
+      box-shadow: none;
+    }
+    
+    .btn-ghost {
+      background: var(--white-05);
+      color: var(--white-70);
+      border: 1px solid var(--white-10);
+    }
+    
+    .btn-ghost:hover {
+      background: var(--white-10);
+      color: var(--white);
+      box-shadow: none;
+    }
+    
+    .btn-small {
+      padding: var(--space-sm) var(--space-md);
+      font-size: 12px;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--white-50);
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0;
+      margin-bottom: var(--space-lg);
+      transition: color 0.2s ease;
+    }
+    
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 16px; height: 16px; }
+    
+    /* Needs attention list */
+    .needs-attention {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .needs-attention-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--warning);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .needs-attention-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    
+    .needs-attention-item {
+      background: var(--dark);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      color: var(--white-90);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .needs-attention-item:hover {
+      background: var(--gold-muted);
+      color: var(--gold);
+    }
+    
+    .needs-attention-item span {
+      color: var(--white-50);
+      font-size: 11px;
+      margin-left: 4px;
+    }
+    
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+    
+    .student-card {
+      background: var(--dark);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg) var(--space-md);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      position: relative;
+    }
+    
+    .student-card:active {
+      transform: scale(0.96);
+      border-color: var(--gold);
+    }
+    
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--gold) 0%, #8b6914 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--black);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .student-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .student-meta {
+      font-size: 12px;
+      color: var(--white-50);
+    }
+    
+    .pulse-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .pulse-indicator.good { background: var(--success); }
+    .pulse-indicator.warning { background: var(--warning); }
+    .pulse-indicator.concern { background: var(--error); }
+    .pulse-indicator.neutral { background: var(--white-30); }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: var(--space-sm);
+    }
+    
+    .badge-success { background: var(--success-bg); color: var(--success); }
+    .badge-warning { background: var(--warning-bg); color: var(--warning); }
+    .badge-error { background: var(--error-bg); color: var(--error); }
+    
+    .record-section {
+      text-align: center;
+      padding: var(--space-xl) 0;
+      margin-bottom: var(--space-md);
+    }
+    
+    .record-btn {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .record-btn.idle {
+      background: linear-gradient(135deg, var(--gold) 0%, #8b6914 100%);
+      box-shadow: var(--shadow-gold);
+    }
+    
+    .record-btn.idle:hover { transform: scale(1.05); }
+    
+    .record-btn.recording {
+      background: linear-gradient(135deg, var(--error) 0%, #c53030 100%);
+      box-shadow: 0 4px 24px rgba(248, 113, 113, 0.4);
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    .record-btn.processing {
+      background: var(--dark-elevated);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    
+    .record-btn svg { width: 36px; height: 36px; }
+    
+    .record-timer {
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--white);
+      font-family: 'DM Sans', monospace;
+      letter-spacing: 2px;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .record-hint {
+      font-size: 14px;
+      color: var(--white-50);
+    }
+    
+    .record-hint strong {
+      color: var(--gold);
+      font-weight: 500;
+    }
+    
+    .record-tips {
+      background: var(--dark);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      font-size: 13px;
+      color: var(--white-50);
+      line-height: 1.7;
+    }
+    
+    .record-tips strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+    
+    .pulse-box {
+      background: var(--dark);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      border-left: 4px solid;
+    }
+    
+    .pulse-box.good { border-color: var(--success); background: var(--success-bg); }
+    .pulse-box.warning { border-color: var(--warning); background: var(--warning-bg); }
+    .pulse-box.concern { border-color: var(--error); background: var(--error-bg); }
+    .pulse-box.neutral { border-color: var(--white-30); }
+    
+    .pulse-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      flex-wrap: wrap;
+    }
+    
+    .pulse-status {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .pulse-status.good { color: var(--success); }
+    .pulse-status.warning { color: var(--warning); }
+    .pulse-status.concern { color: var(--error); }
+    .pulse-status.neutral { color: var(--white-50); }
+    
+    .pulse-content {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--white-90);
+      margin-bottom: var(--space-md);
+    }
+    
+    .pulse-suggestion {
+      background: var(--dark-elevated);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    
+    .pulse-suggestion-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: var(--space-xs);
+    }
+    
+    .observation {
+      background: var(--dark);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      position: relative;
+    }
+    
+    .observation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-sm);
+    }
+    
+    .obs-date {
+      font-size: 12px;
+      color: var(--white-50);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    
+    .obs-type-icon {
+      background: var(--gold-muted);
+      color: var(--gold);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+    }
+    
+    .obs-content {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--white-90);
+    }
+    
+    .obs-audio {
+      width: 100%;
+      height: 44px;
+      margin-top: var(--space-sm);
+      border-radius: var(--radius-sm);
+    }
+    
+    .obs-transcription {
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--dark-border);
+      font-style: italic;
+      color: var(--white-70);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    
+    .delete-btn {
+      background: none;
+      border: none;
+      color: var(--white-30);
+      cursor: pointer;
+      padding: var(--space-sm);
+      font-size: 18px;
+      line-height: 1;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+    
+    .delete-btn:hover {
+      color: var(--error);
+      background: var(--error-bg);
+    }
+    
+    .grade-buttons {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .grade-btn {
+      flex: 1;
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      border: 2px solid;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      background: transparent;
+    }
+    
+    .grade-btn.sobresaliente { border-color: var(--success); color: var(--success); }
+    .grade-btn.aprobo { border-color: var(--warning); color: var(--warning); }
+    .grade-btn.reprobo { border-color: var(--error); color: var(--error); }
+    
+    .grade-btn.selected.sobresaliente { background: var(--success-bg); }
+    .grade-btn.selected.aprobo { background: var(--warning-bg); }
+    .grade-btn.selected.reprobo { background: var(--error-bg); }
+    
+    .grade-btn:active { transform: scale(0.96); }
+    
+    .eval-box {
+      background: var(--dark);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-top: var(--space-lg);
+      white-space: pre-wrap;
+      line-height: 1.8;
+      font-size: 15px;
+      color: var(--white-90);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: var(--space-2xl) var(--space-lg);
+    }
+    
+    .empty-state-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-lg);
+      background: var(--gold-muted);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+    
+    .empty-state p {
+      color: var(--white-50);
+      margin-bottom: var(--space-lg);
+      font-size: 15px;
+    }
+    
+    .student-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+    
+    .student-header .avatar {
+      width: 64px;
+      height: 64px;
+      font-size: 28px;
+      margin: 0;
+    }
+    
+    .student-header-info { flex: 1; }
+    
+    .section-divider {
+      margin-top: var(--space-2xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--dark-border);
+    }
+    
+    .settings-section { margin-bottom: var(--space-xl); }
+    
+    .settings-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: var(--space-sm);
+    }
+    
+    .settings-hint {
+      font-size: 13px;
+      color: var(--white-50);
+      margin-top: var(--space-sm);
+      line-height: 1.6;
+    }
+    
+    .settings-hint a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    
+    .api-input {
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 14px;
+    }
+    
+    .hidden { display: none !important; }
+    .mt-sm { margin-top: var(--space-sm); }
+    .mt-md { margin-top: var(--space-md); }
+    .mt-lg { margin-top: var(--space-lg); }
+    
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--white-30);
+      border-top-color: var(--white);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    .toast {
+      position: fixed;
+      bottom: var(--space-lg);
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--dark-elevated);
+      border: 1px solid var(--dark-border);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      color: var(--white);
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.success { border-color: var(--success); color: var(--success); }
+    
+    .analyzing-box {
+      background: var(--info-bg);
+      border: 1px solid var(--info);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      text-align: center;
+    }
+    
+    .analyzing-box .spinner {
+      margin: 0 auto var(--space-md);
+      border-top-color: var(--info);
+    }
+    
+    .analyzing-text {
+      color: var(--info);
+      font-size: 14px;
+    }
+    
+    /* Export all evaluations */
+    .export-section {
+      background: var(--dark);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+    
+    .export-section-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: var(--space-md);
+    }
+    
+    .export-progress {
+      font-size: 13px;
+      color: var(--white-50);
+      margin-top: var(--space-md);
+    }
+    
+    /* File input hidden */
+    .file-input {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <span class="logo">isthmus<span class="logo-accent">.</span></span>
+      <span class="subtitle">companion</span>
+    </div>
+    <button class="header-btn" id="settings-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path>
+      </svg>
+      <span>API</span>
+    </button>
+  </header>
+  
+  <main class="main" id="app"></main>
+  
+  <div class="toast" id="toast"></div>
+  <input type="file" id="import-file" class="file-input" accept=".json">
+
+  <script>
+    // ==================== STATE ====================
+    let state = {
+      view: 'modules',
+      modules: [],
+      currentModuleId: null,
+      currentStudentId: null,
+      apiKey: '',
+      isRecording: false,
+      isProcessing: false,
+      isAnalyzing: false,
+      generatedEval: '',
+      studentPulse: null,
+      recordingTime: 0,
+      exportProgress: ''
+    };
+
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recordingInterval = null;
+
+    // ==================== STORAGE ====================
+    function saveState() {
+      localStorage.setItem('isthmus-data', JSON.stringify({
+        modules: state.modules,
+        apiKey: state.apiKey
+      }));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem('isthmus-data');
+      if (saved) {
+        const data = JSON.parse(saved);
+        state.modules = data.modules || [];
+        state.apiKey = data.apiKey || '';
+      }
+      updateApiButton();
+    }
+
+    // ==================== HELPERS ====================
+    function getCurrentModule() {
+      return state.modules.find(m => m.id === state.currentModuleId);
+    }
+
+    function getCurrentStudent() {
+      const module = getCurrentModule();
+      return module?.students.find(s => s.id === state.currentStudentId);
+    }
+
+    function formatDate(dateString) {
+      return new Date(dateString).toLocaleDateString('es-ES', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    function getModuleDay(module) {
+      if (!module.startDate) return null;
+      const start = new Date(module.startDate);
+      const today = new Date();
+      const diffTime = today - start;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+      if (diffDays < 1) return 1;
+      if (diffDays > 10) return 10;
+      return diffDays;
+    }
+    
+    function getStudentsNeedingNotes(module) {
+      if (!module || !module.students) return [];
+      return module.students
+        .filter(s => s.observations.length < 5)
+        .sort((a, b) => a.observations.length - b.observations.length);
+    }
+
+    function showToast(message, type = '') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast show ' + type;
+      setTimeout(() => toast.className = 'toast', 3000);
+    }
+
+    function updateApiButton() {
+      const btn = document.getElementById('settings-btn');
+      if (state.apiKey) btn.classList.add('configured');
+      else btn.classList.remove('configured');
+    }
+    
+    // ==================== BACKUP ====================
+    function exportBackup() {
+      const data = {
+        exportDate: new Date().toISOString(),
+        version: '1.0',
+        modules: state.modules
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `isthmus-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Backup descargado', 'success');
+    }
+    
+    function importBackup(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.modules) {
+            if (confirm(`¿Importar ${data.modules.length} módulos? Esto reemplazará tus datos actuales.`)) {
+              state.modules = data.modules;
+              saveState();
+              showToast('Backup importado', 'success');
+              render();
+            }
+          }
+        } catch (err) {
+          showToast('Error al importar archivo');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // ==================== API CALLS ====================
+    async function transcribeAudio(audioBlob) {
+      if (!state.apiKey) {
+        showToast('Configura tu API key primero');
+        return null;
+      }
+
+      const formData = new FormData();
+      formData.append('file', audioBlob, 'audio.webm');
+      formData.append('model', 'whisper-1');
+      formData.append('language', 'es');
+
+      try {
+        const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${state.apiKey}` },
+          body: formData
+        });
+
+        if (!response.ok) throw new Error('Error en transcripción');
+        const data = await response.json();
+        return data.text;
+      } catch (e) {
+        console.error('Transcription error:', e);
+        showToast('Error al transcribir');
+        return null;
+      }
+    }
+
+    async function analyzeStudentPulse(student) {
+      if (!state.apiKey || student.observations.length === 0) return null;
+
+      const observations = student.observations
+        .map(o => `[${formatDate(o.timestamp)}] ${o.transcription || o.content}`)
+        .join('\n');
+
+      try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${state.apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            messages: [{
+              role: 'system',
+              content: `Eres un asistente pedagógico experto que ayuda a un profesor universitario de diseño y arquitectura (Universidad Isthmus, Panamá) a entender a sus estudiantes de manera integral.
+
+Tu rol es analizar las observaciones del profesor y dar un "pulso" del estudiante que incluya:
+1. Estado general (good/warning/concern)
+2. Un resumen breve de cómo va el estudiante
+3. Una sugerencia concreta de qué podría decirle el profesor para ayudarlo
+
+Considera TODO: rendimiento académico, actitud, situaciones personales mencionadas, puntualidad, participación, relación con compañeros, momentos difíciles, logros, etc.
+
+IMPORTANTE: Responde SOLO en formato JSON válido, sin texto adicional:
+{
+  "status": "good|warning|concern",
+  "statusLabel": "texto corto para el estado, ej: 'Va muy bien' o 'Necesita atención'",
+  "summary": "resumen de 2-3 oraciones sobre cómo va el estudiante",
+  "suggestion": "sugerencia específica de qué decirle al estudiante",
+  "likelyGrade": "Sobresaliente|Aprobó|Reprobó|Aún no es claro"
+}`
+            }, {
+              role: 'user',
+              content: `Analiza las observaciones sobre ${student.name}:\n\n${observations}`
+            }],
+            max_tokens: 500
+          })
+        });
+
+        if (!response.ok) throw new Error('Error analizando');
+        const data = await response.json();
+        const content = data.choices[0].message.content;
+        return JSON.parse(content.replace(/```json|```/g, '').trim());
+      } catch (e) {
+        console.error('Analysis error:', e);
+        return null;
+      }
+    }
+
+    async function generateEvaluation(student) {
+      if (!state.apiKey) {
+        showToast('Configura tu API key primero');
+        return null;
+      }
+
+      const observations = student.observations
+        .map(o => `[${formatDate(o.timestamp)}] ${o.transcription || o.content}`)
+        .join('\n');
+
+      try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${state.apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'gpt-4o',
+            messages: [{
+              role: 'system',
+              content: `Eres un profesor universitario de diseño y arquitectura en la Universidad Isthmus (Panamá) escribiendo la evaluación final de un estudiante después de un módulo intensivo de 2 semanas.
+
+Tu evaluación debe ser:
+- PROFUNDA: Habla del estudiante como persona, no solo de su rendimiento
+- INTEGRAL: Considera carácter, actitud, situaciones personales que hayan afectado su desempeño, crecimiento, relación con compañeros
+- SINCERA: Di la verdad con respeto, señala tanto fortalezas como áreas de mejora
+- AMABLE: Escribe con cariño, como quien genuinamente quiere ver crecer al estudiante
+- CERCANA: Usa un tono personal, como si le hablaras directamente
+- CERTERA: Sé específico, usa ejemplos de las observaciones
+
+Si el estudiante tuvo dificultades personales (problemas familiares, llegadas tarde por situaciones de vida, etc.), reconócelo con empatía.
+
+Escribe 3-4 párrafos. El primero sobre la persona, el segundo sobre su trabajo/desempeño, el tercero sobre su crecimiento y potencial, y si aplica un cuarto con recomendaciones específicas para su desarrollo.
+
+No uses frases genéricas. Cada evaluación debe sentirse única y personal.`
+            }, {
+              role: 'user',
+              content: `Escribe la evaluación final para ${student.name} basándote en estas observaciones del módulo:\n\n${observations}\n\nCalificación asignada: ${student.finalGrade || 'No asignada aún'}`
+            }],
+            max_tokens: 1500
+          })
+        });
+
+        if (!response.ok) throw new Error('Error generando evaluación');
+        const data = await response.json();
+        return data.choices[0].message.content;
+      } catch (e) {
+        console.error('Generation error:', e);
+        showToast('Error al generar evaluación');
+        return null;
+      }
+    }
+    
+    async function generateAllEvaluations() {
+      const module = getCurrentModule();
+      if (!module) return;
+      
+      const studentsWithNotes = module.students.filter(s => s.observations.length >= 3);
+      if (studentsWithNotes.length === 0) {
+        showToast('No hay estudiantes con suficientes notas');
+        return;
+      }
+      
+      let allEvaluations = `# Evaluaciones - ${module.name}\n`;
+      allEvaluations += `${module.dates || ''}\n`;
+      allEvaluations += `Generado: ${new Date().toLocaleDateString('es-ES')}\n\n`;
+      allEvaluations += `---\n\n`;
+      
+      for (let i = 0; i < studentsWithNotes.length; i++) {
+        const student = studentsWithNotes[i];
+        state.exportProgress = `Generando ${i + 1} de ${studentsWithNotes.length}: ${student.name}...`;
+        render();
+        
+        const evaluation = await generateEvaluation(student);
+        
+        allEvaluations += `## ${student.name}\n`;
+        allEvaluations += `**Calificación: ${student.finalGrade || 'No asignada'}**\n\n`;
+        allEvaluations += `${evaluation || 'Error al generar evaluación'}\n\n`;
+        allEvaluations += `---\n\n`;
+        
+        // Save to student
+        student.generatedEvaluation = evaluation;
+        saveState();
+      }
+      
+      state.exportProgress = '';
+      
+      // Download as text file
+      const blob = new Blob([allEvaluations], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `evaluaciones-${module.name.replace(/\s+/g, '-').toLowerCase()}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      showToast('Evaluaciones descargadas', 'success');
+      render();
+    }
+
+    // ==================== RECORDING ====================
+    async function startRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        state.recordingTime = 0;
+        
+        // Start timer
+        recordingInterval = setInterval(() => {
+          state.recordingTime++;
+          render();
+        }, 1000);
+
+        mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+
+        mediaRecorder.onstop = async () => {
+          clearInterval(recordingInterval);
+          stream.getTracks().forEach(track => track.stop());
+          state.isProcessing = true;
+          render();
+
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const reader = new FileReader();
+          
+          reader.onloadend = async () => {
+            const transcription = await transcribeAudio(audioBlob);
+            const student = getCurrentStudent();
+            
+            if (student) {
+              student.observations.push({
+                id: Date.now(),
+                type: 'voice',
+                content: reader.result,
+                transcription: transcription,
+                timestamp: new Date().toISOString()
+              });
+              saveState();
+              showToast('Observación guardada', 'success');
+            }
+            
+            state.isProcessing = false;
+            state.recordingTime = 0;
+            
+            // Analyze pulse after new observation
+            if (student && student.observations.length >= 1) {
+              state.isAnalyzing = true;
+              render();
+              state.studentPulse = await analyzeStudentPulse(student);
+              student.pulse = state.studentPulse;
+              saveState();
+              state.isAnalyzing = false;
+            }
+            
+            render();
+          };
+          reader.readAsDataURL(audioBlob);
+        };
+
+        mediaRecorder.start();
+        state.isRecording = true;
+        
+        // Haptic feedback
+        if (navigator.vibrate) navigator.vibrate(50);
+        
+        render();
+      } catch (e) {
+        showToast('No se pudo acceder al micrófono');
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && state.isRecording) {
+        mediaRecorder.stop();
+        state.isRecording = false;
+        
+        // Haptic feedback
+        if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+        
+        render();
+      }
+    }
+
+    // ==================== ACTIONS ====================
+    function createModule(name, dates, startDate) {
+      state.modules.push({
+        id: Date.now(),
+        name,
+        dates,
+        startDate: startDate || new Date().toISOString(),
+        students: [],
+        createdAt: new Date().toISOString()
+      });
+      saveState();
+      showToast('Módulo creado', 'success');
+      render();
+    }
+
+    function addStudent(name) {
+      const module = getCurrentModule();
+      if (module) {
+        module.students.push({
+          id: Date.now(),
+          name,
+          observations: [],
+          finalGrade: null,
+          pulse: null,
+          generatedEvaluation: null
+        });
+        saveState();
+        showToast('Estudiante agregado', 'success');
+        render();
+      }
+    }
+
+    function addTextObservation(content) {
+      const student = getCurrentStudent();
+      if (student && content.trim()) {
+        student.observations.push({
+          id: Date.now(),
+          type: 'text',
+          content: content.trim(),
+          timestamp: new Date().toISOString()
+        });
+        saveState();
+        showToast('Nota guardada', 'success');
+        
+        // Trigger pulse analysis
+        (async () => {
+          state.isAnalyzing = true;
+          render();
+          state.studentPulse = await analyzeStudentPulse(student);
+          student.pulse = state.studentPulse;
+          saveState();
+          state.isAnalyzing = false;
+          render();
+        })();
+      }
+    }
+
+    function setGrade(grade) {
+      const student = getCurrentStudent();
+      if (student) {
+        student.finalGrade = grade;
+        saveState();
+        render();
+      }
+    }
+
+    function deleteObservation(obsId) {
+      const student = getCurrentStudent();
+      if (student) {
+        student.observations = student.observations.filter(o => o.id !== obsId);
+        saveState();
+        render();
+      }
+    }
+
+    // ==================== NAVIGATION ====================
+    function goToModules() {
+      state.view = 'modules';
+      state.currentModuleId = null;
+      state.currentStudentId = null;
+      state.generatedEval = '';
+      state.studentPulse = null;
+      render();
+    }
+
+    function goToModule(moduleId) {
+      state.view = 'students';
+      state.currentModuleId = moduleId;
+      state.currentStudentId = null;
+      render();
+    }
+
+    async function goToStudent(studentId) {
+      state.view = 'student';
+      state.currentStudentId = studentId;
+      state.generatedEval = '';
+      
+      const student = getCurrentStudent();
+      state.studentPulse = student?.pulse || null;
+      render();
+      
+      // Refresh pulse analysis if has observations
+      if (student && student.observations.length > 0 && !state.studentPulse) {
+        state.isAnalyzing = true;
+        render();
+        state.studentPulse = await analyzeStudentPulse(student);
+        student.pulse = state.studentPulse;
+        saveState();
+        state.isAnalyzing = false;
+        render();
+      }
+    }
+
+    function goToSettings() {
+      state.view = 'settings';
+      render();
+    }
+
+    // ==================== ICONS ====================
+    const icons = {
+      mic: `<svg width="36" height="36" viewBox="0 0 24 24" fill="#1a1a1a"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>`,
+      stop: `<svg width="36" height="36" viewBox="0 0 24 24" fill="#fff"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`,
+      back: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`,
+      plus: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>`,
+      arrow: `→`,
+      folder: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>`,
+      user: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>`,
+      download: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`,
+      upload: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>`,
+      warning: `⚠️`
+    };
+
+    // ==================== RENDER ====================
+    function render() {
+      const app = document.getElementById('app');
+      
+      switch (state.view) {
+        case 'modules': app.innerHTML = renderModules(); break;
+        case 'students': app.innerHTML = renderStudents(); break;
+        case 'student': app.innerHTML = renderStudent(); break;
+        case 'settings': app.innerHTML = renderSettings(); break;
+      }
+
+      attachEventListeners();
+    }
+
+    function renderModules() {
+      const moduleCards = state.modules.map(m => {
+        const day = getModuleDay(m);
+        const dayBadge = day ? `<span class="day-badge">Día ${day}/10</span>` : '';
+        
+        return `
+          <div class="card" data-module-id="${m.id}">
+            <div class="card-header">
+              <div>
+                <div class="card-title">${m.name} ${dayBadge}</div>
+                <div class="card-meta">${m.dates ? m.dates + ' · ' : ''}${m.students.length} estudiante${m.students.length !== 1 ? 's' : ''}</div>
+              </div>
+              <span class="card-arrow">${icons.arrow}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="section-label">Tus Módulos</div>
+        
+        ${state.modules.length === 0 ? `
+          <div class="empty-state">
+            <div class="empty-state-icon">${icons.folder}</div>
+            <p>No tienes módulos todavía.<br>Crea uno para comenzar.</p>
+            <button class="btn" id="first-module-btn">${icons.plus} Crear Módulo</button>
+          </div>
+        ` : `
+          ${moduleCards}
+          <button class="btn btn-secondary mt-lg" id="new-module-btn">${icons.plus} Nuevo Módulo</button>
+        `}
+        
+        <div class="form-card hidden" id="module-form">
+          <input class="input" id="module-name" placeholder="Nombre del curso">
+          <input class="input" id="module-dates" placeholder="Fechas (ej: Enero 15-26, 2025)">
+          <input class="input" id="module-start" type="date" placeholder="Fecha de inicio">
+          <div class="btn-group">
+            <button class="btn" id="save-module-btn">Crear</button>
+            <button class="btn btn-ghost" id="cancel-module-btn">Cancelar</button>
+          </div>
+        </div>
+        
+        <div class="section-divider">
+          <div class="section-label">Backup</div>
+          <div class="btn-group">
+            <button class="btn btn-ghost btn-small" id="export-btn">${icons.download} Exportar</button>
+            <button class="btn btn-ghost btn-small" id="import-btn">${icons.upload} Importar</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderStudents() {
+      const module = getCurrentModule();
+      const day = getModuleDay(module);
+      const needsAttention = getStudentsNeedingNotes(module);
+      
+      // Needs attention section
+      let needsAttentionHtml = '';
+      if (needsAttention.length > 0 && module.students.length > 0) {
+        const items = needsAttention.slice(0, 5).map(s => 
+          `<span class="needs-attention-item" data-student-id="${s.id}">${s.name} <span>${s.observations.length}/5</span></span>`
+        ).join('');
+        
+        needsAttentionHtml = `
+          <div class="needs-attention">
+            <div class="needs-attention-title">${icons.warning} Necesitan más notas</div>
+            <div class="needs-attention-list">${items}</div>
+          </div>
+        `;
+      }
+      
+      const studentCards = module.students.map(s => {
+        let pulseClass = 'neutral';
+        if (s.pulse) pulseClass = s.pulse.status;
+        
+        let badge = '';
+        if (s.finalGrade) {
+          const cls = s.finalGrade === 'Sobresaliente' ? 'success' : s.finalGrade === 'Aprobó' ? 'warning' : 'error';
+          badge = `<div class="badge badge-${cls}">${s.finalGrade}</div>`;
+        }
+        
+        return `
+          <div class="student-card" data-student-id="${s.id}">
+            ${s.observations.length > 0 ? `<div class="pulse-indicator ${pulseClass}"></div>` : ''}
+            <div class="avatar">${s.name.charAt(0).toUpperCase()}</div>
+            <div class="student-name">${s.name}</div>
+            <div class="student-meta">${s.observations.length}/5 notas</div>
+            ${badge}
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <button class="back-btn" id="back-to-modules">${icons.back} Módulos</button>
+        
+        <div class="page-title">${module.name} ${day ? `<span class="day-badge">Día ${day}/10</span>` : ''}</div>
+        <div class="page-meta">${module.dates || 'Sin fechas'}</div>
+        
+        ${needsAttentionHtml}
+        
+        <div class="section-label mt-lg">Estudiantes</div>
+        
+        ${module.students.length === 0 ? `
+          <div class="empty-state">
+            <div class="empty-state-icon">${icons.user}</div>
+            <p>Agrega a tus estudiantes</p>
+            <button class="btn" id="first-student-btn">${icons.plus} Agregar</button>
+          </div>
+        ` : `
+          <div class="student-grid">${studentCards}</div>
+          <button class="btn btn-secondary mt-lg" id="new-student-btn">${icons.plus} Agregar Estudiante</button>
+        `}
+        
+        <div class="form-card hidden" id="student-form">
+          <input class="input" id="student-name" placeholder="Nombre del estudiante">
+          <div class="btn-group">
+            <button class="btn" id="save-student-btn">Agregar</button>
+            <button class="btn btn-ghost" id="cancel-student-btn">Cancelar</button>
+          </div>
+        </div>
+        
+        ${module.students.length >= 3 ? `
+          <div class="export-section">
+            <div class="export-section-title">Exportar Evaluaciones</div>
+            <button class="btn btn-secondary" id="export-all-evals-btn">${icons.download} Generar y descargar todas</button>
+            ${state.exportProgress ? `<div class="export-progress">${state.exportProgress}</div>` : ''}
+          </div>
+        ` : ''}
+      `;
+    }
+
+    function renderStudent() {
+      const student = getCurrentStudent();
+      const module = getCurrentModule();
+      const day = getModuleDay(module);
+      
+      // Recording UI
+      let recordUI;
+      if (state.isRecording) {
+        recordUI = `
+          <div class="record-timer">${formatTime(state.recordingTime)}</div>
+          <button class="record-btn recording" id="record-btn">${icons.stop}</button>
+          <div class="record-hint">Toca para <strong>detener</strong></div>
+        `;
+      } else if (state.isProcessing) {
+        recordUI = `
+          <button class="record-btn processing" id="record-btn" disabled><div class="spinner"></div></button>
+          <div class="record-hint"><strong>Transcribiendo...</strong></div>
+        `;
+      } else {
+        recordUI = `
+          <button class="record-btn idle" id="record-btn">${icons.mic}</button>
+          <div class="record-hint">Toca para <strong>grabar</strong></div>
+        `;
+      }
+
+      // Pulse section
+      let pulseSection = '';
+      if (state.isAnalyzing) {
+        pulseSection = `
+          <div class="analyzing-box">
+            <div class="spinner"></div>
+            <div class="analyzing-text">Analizando observaciones...</div>
+          </div>
+        `;
+      } else if (state.studentPulse) {
+        const p = state.studentPulse;
+        pulseSection = `
+          <div class="pulse-box ${p.status}">
+            <div class="pulse-header">
+              <span class="pulse-status ${p.status}">${p.statusLabel}</span>
+              ${p.likelyGrade ? `<span style="margin-left: auto; font-size: 12px; color: var(--white-50);">Probable: ${p.likelyGrade}</span>` : ''}
+            </div>
+            <div class="pulse-content">${p.summary}</div>
+            <div class="pulse-suggestion">
+              <div class="pulse-suggestion-label">💡 Sugerencia para decirle</div>
+              ${p.suggestion}
+            </div>
+          </div>
+        `;
+      } else if (student.observations.length === 0) {
+        pulseSection = `
+          <div class="record-tips">
+            <strong>💡 Qué puedes grabar</strong>
+            Habla de todo lo que observes: cómo llegó hoy, su actitud, si participó, si ayudó a alguien, si le costó algo, si te contó algo personal, ideas que tuvo, preguntas que hizo, momentos brillantes, dificultades...
+          </div>
+        `;
+      }
+
+      const observations = [...student.observations].reverse().map(o => `
+        <div class="observation">
+          <div class="observation-header">
+            <div class="obs-date">
+              ${formatDate(o.timestamp)}
+              <span class="obs-type-icon">${o.type === 'voice' ? '🎤' : '✏️'}</span>
+            </div>
+            <button class="delete-btn" data-delete-obs="${o.id}">×</button>
+          </div>
+          ${o.type === 'text' 
+            ? `<div class="obs-content">${o.content}</div>`
+            : `
+              <audio class="obs-audio" controls src="${o.content}"></audio>
+              ${o.transcription ? `<div class="obs-transcription">${o.transcription}</div>` : '<div class="obs-transcription" style="color: var(--white-30);">Sin transcripción</div>'}
+            `
+          }
+        </div>
+      `).join('');
+
+      const gradeButtons = ['Sobresaliente', 'Aprobó', 'Reprobó'].map(g => {
+        const cls = g.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const selected = student.finalGrade === g ? 'selected' : '';
+        return `<button class="grade-btn ${cls} ${selected}" data-grade="${g}">${g}</button>`;
+      }).join('');
+
+      const obsCount = student.observations.length;
+      const obsRemaining = Math.max(0, 5 - obsCount);
+
+      return `
+        <button class="back-btn" id="back-to-students">${icons.back} ${module.name}</button>
+        
+        <div class="student-header">
+          <div class="avatar">${student.name.charAt(0).toUpperCase()}</div>
+          <div class="student-header-info">
+            <div class="page-title">${student.name} ${day ? `<span class="day-badge">Día ${day}</span>` : ''}</div>
+            <div class="page-meta">${obsCount} de 5-8 observaciones ${obsRemaining > 0 ? `(faltan ${obsRemaining})` : '✓'}</div>
+          </div>
+        </div>
+        
+        ${pulseSection}
+        
+        <div class="record-section">
+          ${recordUI}
+        </div>
+        
+        <div style="margin-bottom: var(--space-xl);">
+          <textarea class="input" id="text-note" placeholder="O escribe una nota rápida..."></textarea>
+          <button class="btn btn-secondary" id="save-note-btn">Guardar Nota</button>
+        </div>
+        
+        ${student.observations.length > 0 ? `
+          <div class="section-label">Observaciones (${obsCount})</div>
+          ${observations}
+        ` : ''}
+        
+        <div class="section-divider">
+          <div class="section-label">Evaluación Final</div>
+          
+          <div class="grade-buttons">${gradeButtons}</div>
+          
+          <button class="btn" id="generate-eval-btn" ${student.observations.length < 3 ? 'disabled' : ''}>
+            ${student.observations.length < 3 ? `Necesitas ${3 - student.observations.length} notas más` : 'Generar Evaluación Final'}
+          </button>
+          
+          ${state.generatedEval ? `
+            <div class="eval-box">${state.generatedEval}</div>
+            <button class="btn btn-secondary mt-md" id="copy-eval-btn">Copiar Texto</button>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function renderSettings() {
+      return `
+        <button class="back-btn" id="back-to-modules">${icons.back} Volver</button>
+        
+        <div class="page-title">Configuración</div>
+        
+        <div class="settings-section mt-lg">
+          <div class="settings-label">API Key de OpenAI</div>
+          <input class="input api-input" id="api-key-input" type="password" 
+                 placeholder="sk-..." value="${state.apiKey}">
+          <p class="settings-hint">
+            Necesaria para transcribir y analizar.<br>
+            <a href="https://platform.openai.com/api-keys" target="_blank">Conseguir en platform.openai.com</a>
+          </p>
+          <button class="btn mt-lg" id="save-api-btn">Guardar</button>
+        </div>
+        
+        <div class="section-divider">
+          <div class="section-label">Datos</div>
+          <div class="btn-group">
+            <button class="btn btn-ghost" id="export-btn">${icons.download} Exportar Backup</button>
+            <button class="btn btn-ghost" id="import-btn">${icons.upload} Importar</button>
+          </div>
+          <p class="settings-hint mt-md">
+            Exporta tus datos para tener un respaldo. Puedes importarlos en otro dispositivo o si borras el navegador.
+          </p>
+        </div>
+      `;
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    function attachEventListeners() {
+      // Settings & Navigation
+      document.getElementById('settings-btn')?.addEventListener('click', goToSettings);
+      document.getElementById('back-to-modules')?.addEventListener('click', goToModules);
+      document.getElementById('save-api-btn')?.addEventListener('click', () => {
+        state.apiKey = document.getElementById('api-key-input').value;
+        saveState();
+        updateApiButton();
+        showToast('API key guardada', 'success');
+        goToModules();
+      });
+      
+      // Backup
+      document.getElementById('export-btn')?.addEventListener('click', exportBackup);
+      document.getElementById('import-btn')?.addEventListener('click', () => {
+        document.getElementById('import-file').click();
+      });
+      document.getElementById('import-file')?.addEventListener('change', (e) => {
+        if (e.target.files[0]) {
+          importBackup(e.target.files[0]);
+          e.target.value = '';
+        }
+      });
+
+      // Modules
+      const showModuleForm = () => {
+        document.getElementById('module-form')?.classList.remove('hidden');
+        document.getElementById('module-start').valueAsDate = new Date();
+      };
+      document.getElementById('first-module-btn')?.addEventListener('click', showModuleForm);
+      document.getElementById('new-module-btn')?.addEventListener('click', showModuleForm);
+      document.getElementById('cancel-module-btn')?.addEventListener('click', () => {
+        document.getElementById('module-form')?.classList.add('hidden');
+      });
+      document.getElementById('save-module-btn')?.addEventListener('click', () => {
+        const name = document.getElementById('module-name').value;
+        const dates = document.getElementById('module-dates').value;
+        const startDate = document.getElementById('module-start').value;
+        if (name.trim()) createModule(name, dates, startDate);
+      });
+
+      document.querySelectorAll('[data-module-id]').forEach(el => {
+        el.addEventListener('click', () => goToModule(parseInt(el.dataset.moduleId)));
+      });
+
+      // Students
+      document.getElementById('back-to-students')?.addEventListener('click', () => {
+        const student = getCurrentStudent();
+        if (student && state.studentPulse) {
+          student.pulse = state.studentPulse;
+          saveState();
+        }
+        state.view = 'students';
+        state.currentStudentId = null;
+        state.generatedEval = '';
+        state.studentPulse = null;
+        render();
+      });
+      
+      const showStudentForm = () => document.getElementById('student-form')?.classList.remove('hidden');
+      document.getElementById('first-student-btn')?.addEventListener('click', showStudentForm);
+      document.getElementById('new-student-btn')?.addEventListener('click', showStudentForm);
+      document.getElementById('cancel-student-btn')?.addEventListener('click', () => {
+        document.getElementById('student-form')?.classList.add('hidden');
+      });
+      document.getElementById('save-student-btn')?.addEventListener('click', () => {
+        const name = document.getElementById('student-name').value;
+        if (name.trim()) addStudent(name);
+      });
+
+      document.querySelectorAll('[data-student-id]').forEach(el => {
+        el.addEventListener('click', () => goToStudent(parseInt(el.dataset.studentId)));
+      });
+      
+      // Export all evaluations
+      document.getElementById('export-all-evals-btn')?.addEventListener('click', generateAllEvaluations);
+
+      // Recording
+      document.getElementById('record-btn')?.addEventListener('click', () => {
+        if (state.isRecording) stopRecording();
+        else if (!state.isProcessing) startRecording();
+      });
+
+      document.getElementById('save-note-btn')?.addEventListener('click', () => {
+        const note = document.getElementById('text-note').value;
+        if (note.trim()) {
+          addTextObservation(note);
+          document.getElementById('text-note').value = '';
+        }
+      });
+
+      document.querySelectorAll('[data-grade]').forEach(el => {
+        el.addEventListener('click', () => setGrade(el.dataset.grade));
+      });
+
+      document.querySelectorAll('[data-delete-obs]').forEach(el => {
+        el.addEventListener('click', () => {
+          if (confirm('¿Eliminar?')) deleteObservation(parseInt(el.dataset.deleteObs));
+        });
+      });
+
+      document.getElementById('generate-eval-btn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('generate-eval-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<div class="spinner"></div> Generando...';
+        
+        const student = getCurrentStudent();
+        const evaluation = await generateEvaluation(student);
+        if (evaluation) {
+          state.generatedEval = evaluation;
+          student.generatedEvaluation = evaluation;
+          saveState();
+        }
+        render();
+      });
+
+      document.getElementById('copy-eval-btn')?.addEventListener('click', () => {
+        navigator.clipboard.writeText(state.generatedEval);
+        showToast('Texto copiado', 'success');
+      });
+    }
+
+    // ==================== INIT ====================
+    loadState();
+    render();
+  </script>
+</body>
+</html>
